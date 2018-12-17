@@ -21,14 +21,13 @@ public class ArrivalDelayCount {
             System.exit(2);
         }
         
-        try {
-//            
-//            //이미 있다면 삭제처리 해주자. 
-//            FileSystem hdfs = FileSystem.get(conf);
-//            if (hdfs.exists(new Path(args[1]))) {
-//                hdfs.delete(new Path(args[1]), true);
-//            }     
-//            
+        try {            
+            //이미 있다면 삭제처리 해주자. 
+            FileSystem hdfs = FileSystem.get(conf);
+            if (hdfs.exists(new Path(args[1]))) {
+                hdfs.delete(new Path(args[1]), true);
+            }     
+            
             Job job = Job.getInstance(conf, "ArrivalDelayCount");
             //입출력 데이터 경로 설정
             FileInputFormat.addInputPath(job, new Path(args[0]));

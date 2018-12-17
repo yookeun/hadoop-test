@@ -1,6 +1,7 @@
 package example.airline;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -24,6 +25,12 @@ public class DepartureDelayCount {
         
         //잡이름 설정
         try {
+            
+            //이미 있다면 삭제처리 해주자. 
+            FileSystem hdfs = FileSystem.get(conf);
+            if (hdfs.exists(new Path(args[1]))) {
+                hdfs.delete(new Path(args[1]), true);
+            }                 
 
             Job job = Job.getInstance(conf, "DepartureDelayCount");            
             
