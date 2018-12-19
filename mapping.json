@@ -1,0 +1,16 @@
+
+PUT /eshadoop/
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "yearMonth": {
+          "type": "keyword"
+        },
+        "count": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

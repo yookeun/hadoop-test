@@ -16,8 +16,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class DepartureDelayCount {
     public static void main(String[] args)  {
-        Configuration conf = new Configuration();
-        
+                
         if (args.length != 2) {
             System.err.println("Usage : DepartureDelayCount <input> <output>");
             System.exit(2);
@@ -25,7 +24,7 @@ public class DepartureDelayCount {
         
         //잡이름 설정
         try {
-            
+            Configuration conf = new Configuration();
             //이미 있다면 삭제처리 해주자. 
             FileSystem hdfs = FileSystem.get(conf);
             if (hdfs.exists(new Path(args[1]))) {
