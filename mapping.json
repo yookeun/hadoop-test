@@ -5,7 +5,8 @@ PUT /eshadoop/
     "_doc": {
       "properties": {
         "yearMonth": {
-          "type": "keyword"
+          "type": "date",
+          "format": "yyyyMM"
         },
         "count": {
           "type": "integer"

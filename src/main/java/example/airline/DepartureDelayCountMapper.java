@@ -18,7 +18,7 @@ public class DepartureDelayCountMapper extends Mapper<LongWritable, Text, Text, 
         AirlinePerformanceParser parser = new AirlinePerformanceParser(text);
         
         //출력키 설정
-        outputKey.set(parser.getYear() + "" + parser.getMonth());
+        outputKey.set(parser.getYear() + "," + parser.getMonth());
         
         if (parser.getDepartureDelayTime() >  0) {
             context.write(outputKey, outputValue);            

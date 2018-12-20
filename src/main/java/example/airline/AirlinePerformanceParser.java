@@ -18,6 +18,7 @@ public class AirlinePerformanceParser {
     private boolean arriveDelayAvailable = true;
     private boolean departureDelayAvailable = true;
     private boolean distanceAvailable = true;
+    private String yearMonth;
     
     private String uniqueCarrier;
     
@@ -27,7 +28,14 @@ public class AirlinePerformanceParser {
             //운항 연도 설정
             year = Integer.parseInt(columns[0]);            
             //운항 월 설정 
-            month = Integer.parseInt(columns[1]);            
+            month = Integer.parseInt(columns[1]);
+            
+            if (month < 10) {
+                yearMonth = year + "0" +month;
+            } else {
+                yearMonth = year + "" +month;    
+            }
+            
             //항공사 코드설정
             uniqueCarrier = columns[8];            
             //항공기 출발 지연시간설정
