@@ -13,35 +13,33 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 import org.elasticsearch.hadoop.mr.EsOutputFormat;
 
-import example.airline.DelayCountMapper;
+import example.airline.DelayCountMultiOutputMapper;
 
-
-public class EsMapReduce extends Configured implements Tool {
+public class EsMultiMapReduce extends Configured implements Tool {
 
     public static void main(String[] args) throws Exception {
         // Start the WordCount MapReduce application
-        int res = ToolRunner.run(new Configuration(), new EsMapReduce(), args);
+        int res = ToolRunner.run(new Configuration(), new EsMultiMapReduce(), args);
         System.exit(res);
     }
 
     public int run(String[] args) throws Exception {
-        
+
         String[] otherArgs = new GenericOptionsParser(getConf(), args).getRemainingArgs();
 
         if (otherArgs.length != 2) {
             System.err.println("Usage :  EsMapReduce <input> <output>");
             System.exit(2);
         }
-        
 
-        //Configuration conf = new Configuration();
+        // Configuration conf = new Configuration();
         getConf().setBoolean("mapreduce.map.speculative", false);
         getConf().setBoolean("mapreduce.reduce.speculative", false);
         getConf().set("es.nodes", "localhost:9200");
-        getConf().set("es.resource", "eshadoop/_doc");
+        getConf().set("es.resource", "eshadoop_multi/_doc");
         getConf().set("es.batch.size.entries", "1");
 
-        Job job = Job.getInstance(getConf(), "EsMapReduce");
+        Job job = Job.getInstance(getConf(), "EsMultiMapReduce");
         // 입출력 데이터 경로 설정
         FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
         FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
@@ -49,13 +47,13 @@ public class EsMapReduce extends Configured implements Tool {
         // job.setSpeculativeExecution(false);
 
         // 잡클래스설정
-        job.setJarByClass(EsMapReduce.class);
+        job.setJarByClass(EsMultiMapReduce.class);
 
         // Map class
-        job.setMapperClass(DelayCountMapper.class);
-        
-        // Reducer class        
-        job.setReducerClass(EsReducer.class);
+        job.setMapperClass(DelayCountMultiOutputMapper.class);
+
+        // Reducer class
+        job.setReducerClass(EsMultiReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);

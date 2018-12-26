@@ -2,6 +2,7 @@ package example.airline;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -33,6 +34,12 @@ public class DelayCountMulti extends Configured implements Tool {
             System.exit(2);
         }
         
+        //이미 있다면 삭제처리 해주자. 
+        FileSystem hdfs = FileSystem.get(getConf());
+        if (hdfs.exists(new Path(otherArgs[1]))) {
+            hdfs.delete(new Path(otherArgs[1]), true);
+        }    
+        
         Job job = Job.getInstance(getConf(),"DelayCount");
         //입출력데이터 경로설정
         FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
@@ -41,9 +48,9 @@ public class DelayCountMulti extends Configured implements Tool {
         //잡클래스 설정
         job.setJarByClass(DelayCount.class);
         //매퍼 클래스 설정
-        job.setMapperClass(DelayCountMapper.class);
+        job.setMapperClass(DelayCountMultiOutputMapper.class);
         //리듀서 클래스 설정
-        job.setReducerClass(DelayCountReducer.class);
+        job.setReducerClass(DelayCountMultiOutputReducer.class);
         //입출력 데이터 포멧
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);

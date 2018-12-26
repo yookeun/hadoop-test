@@ -28,8 +28,8 @@ public class DelayCountMultiOutputReducer extends Reducer<Text, IntWritable, Tex
         String[] columns = key.toString().split(",");
         
         //출력키 설정
-        outputKey.set(columns[1] + "," + columns[2]);
-        
+        //outputKey.set(columns[1] + "," + columns[2]);
+        outputKey.set(columns[1]);
         //출발 지연
         if (columns[0].equals("D")) {
             //지연 횟수 합산
@@ -40,7 +40,7 @@ public class DelayCountMultiOutputReducer extends Reducer<Text, IntWritable, Tex
             //출력값 설정
             result.set(sum);
             //출력 데이터 설정
-            mos.write("deparure", outputKey, result);
+            mos.write("departure", outputKey, result);
             
             
         //도착지연    

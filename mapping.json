@@ -15,3 +15,25 @@ PUT /eshadoop/
     }
   }
 }
+
+
+
+PUT /eshadoop_multi/
+{
+  "mappings": {
+    "_doc": {
+      "properties": {
+      	"delayType": {
+      		"type": "keyword"
+      	},
+        "yearMonth": {
+          "type": "date",
+          "format": "yyyyMM"
+        },
+        "count": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
