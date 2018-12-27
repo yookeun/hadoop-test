@@ -46,7 +46,7 @@ public class DelayCountMulti extends Configured implements Tool {
         FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
         
         //잡클래스 설정
-        job.setJarByClass(DelayCount.class);
+        job.setJarByClass(DelayCountMulti.class);
         //매퍼 클래스 설정
         job.setMapperClass(DelayCountMultiOutputMapper.class);
         //리듀서 클래스 설정
